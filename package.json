@@ -1,0 +1,19 @@
+{
+  "name": "bikini-bay-runner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "地铁跑酷 · 比基尼湾站 —— 纯 Canvas 2D 伪 3D 的海底跑酷小游戏",
+  "scripts": {
+    "start": "node scripts/serve.cjs",
+    "serve": "node scripts/serve.cjs",
+    "test": "node scripts/run-checks.cjs",
+    "check": "node scripts/run-checks.cjs",
+    "build": "node scripts/build-dist.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

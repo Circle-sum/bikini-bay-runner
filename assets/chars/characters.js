@@ -22,7 +22,9 @@ const CHARACTERS = [
     accent: '#ffd23e',
     h: 1.72,
     w: 1.5,
-    img: 'assets/chars/spongebob.png'
+    img: 'assets/chars/spongebob.webp',
+    // 开局伙伴：unlock 为 0 表示无需解锁
+    unlock: 0
   },
   {
     id: 'patrick',
@@ -40,7 +42,8 @@ const CHARACTERS = [
     accent: '#ff9ec4',
     h: 1.72,
     w: 1.52,
-    img: 'assets/chars/patrick.png'
+    img: 'assets/chars/patrick.webp',
+    unlock: 180
   },
   {
     id: 'squidward',
@@ -58,7 +61,8 @@ const CHARACTERS = [
     accent: '#8fd3c5',
     h: 1.86,
     w: 1.12,
-    img: 'assets/chars/squidward.png'
+    img: 'assets/chars/squidward.webp',
+    unlock: 320
   },
   {
     id: 'sandy',
@@ -76,6 +80,7 @@ const CHARACTERS = [
     accent: '#9fc6ea',
     h: 1.74,
     w: 1.3,
-    img: 'assets/chars/sandy.png'
+    img: 'assets/chars/sandy.webp',
+    unlock: 520
   }
 ];

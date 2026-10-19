@@ -1,0 +1,19 @@
+{
+  "name": "地铁跑酷 · 比基尼湾站",
+  "short_name": "比基尼湾跑酷",
+  "description": "海底环线跑酷：三条轨道、四个跑者、四种绝活，无限旅程挑战最高分。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#59c1f2",
+  "theme_color": "#59c1f2",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

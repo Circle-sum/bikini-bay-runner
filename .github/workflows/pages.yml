@@ -3,6 +3,7 @@ name: Deploy game to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -15,7 +16,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 先跑回归检查（角色技能、碰撞、街区、商店经济、存档回滚），失败就不部署
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      # runner 上通常已装 Chrome，测试会优先用它；这一行是兜底，
+      # 保证没有 Chrome 的环境也能跑（run-checks 会自动回退到自带 chromium）
+      - name: Install fallback browser
+        run: npx playwright install --with-deps chromium
+      - name: Run checks
+        run: npm test
+      - name: Build dist
+        run: npm run build
+
   deploy:
+    needs: check
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,12 +47,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      # 只上传 dist/：仓库里的设计稿与调试导出不进部署包
+      - name: Build dist
+        run: node scripts/build-dist.cjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

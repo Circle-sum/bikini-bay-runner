@@ -93,7 +93,8 @@ async (page) => {
     clean(0);
     {
       const plan = Array.from({ length: 24 }, (_, i) => districtIdForSegment(i));
-      assert(plan.every(id => SAVE.themes.includes(id)), 'District plan only uses unlocked districts');
+      assert(plan.every(id => DISTRICTS.some(d => d.id === id)), 'District plan only uses known districts');
+      assert(new Set(plan.slice(0, 8)).size === DISTRICTS.length, 'All four districts appear within the first eight segments');
       assert(plan.every((id, i) => i === 0 || id !== plan[i - 1]), 'District plan never repeats back to back');
       assert(new Set(plan).size > 1, 'District order rotates instead of staying fixed');
       assert(DISTRICTS.every(d => d.palette && d.palette.skyTop && d.palette.sand && d.palette.road), 'Every district has its own environment palette');
@@ -111,14 +112,17 @@ async (page) => {
     game.meters = DISTRICT_METERS * 2 + 5; updateDistrictState(0.016);
     assert(game.districtSegment === 2 && game.districtBannerT > 2, 'Crossing a second boundary prompts again');
 
-    clean(3); gotoSelect(); buildCharList();
+    clean(3); SAVE.unlocked = CHARS.map(c => c.id); gotoSelect(); buildCharList();
     return results;
   });
   await page.getByRole('button', { name: '出发', exact: true }).click();
   await page.evaluate(() => { game.props = []; game.spawnZ = game.player.z + 1000; game.sceneryZ = game.player.z + 1000; game.state = 'playing'; game.deadT = 0; showHUD(); updatePowers(); });
   if (!await page.locator('#btnSkill').isEnabled()) throw new Error('Active character skill button is disabled');
   await page.locator('#btnSkill').click();
-  if (!await page.evaluate(() => game.charSkillUsed && game.charHintT === 5)) throw new Error('Skill button did not activate planner');
+  // 点按后技能立即生效；charHintT 会随每帧递减，所以只断言「已激活且在计时」，不比对精确的 5
+  const skillState = await page.evaluate(() => ({ used: game.charSkillUsed, hint: game.charHintT, char: game.player.char.id }));
+  if (!skillState.used || skillState.hint <= 0 || skillState.char !== 'sandy')
+    throw new Error('Skill button did not activate planner: ' + JSON.stringify(skillState));
   await page.getByRole('button', { name: '暂停游戏', exact: true }).click();
   const before = await page.evaluate(() => game.player.z);
   await page.waitForTimeout(100);
