@@ -15,6 +15,10 @@ async (page) => {
 
   // ---- 入口：标题页 → 小世界 ----
   assert(await page.evaluate(() => !!document.querySelector('script[src="assets/world/world.js"]')), 'index.html 引入了 world.js');
+  assert(await page.evaluate(() =>
+    !!document.querySelector('script[src="assets/world/krusty.js"]') &&
+    !!document.querySelector('script[src="assets/world/dojo.js"]')
+  ), 'index.html 引入了蟹堡王与空手道脚本');
   assert(await page.evaluate(() => typeof WorldHub === 'object' && typeof JellyGame === 'object' && typeof WORLD_TUNING === 'object'), '小世界的三个全局对象都可用');
   await page.getByRole('button', { name: '小世界' }).click();
   await page.locator('#worldHud').waitFor({ state: 'visible' });
@@ -44,20 +48,29 @@ async (page) => {
   const edge = await page.evaluate(() => ({ x: WorldHub.player.x, ok: WorldHub.canStand(WorldHub.player.x, WorldHub.player.y) }));
   assert(edge.ok && edge.x < 96 && edge.x > 55, '走到岛边会被挡住，不会走进深海');
 
-  // ---- 蟹堡王 / 空手道棚：走近给台词，不能进 ----
+  // ---- 蟹堡王 / 空手道棚：走近能进门玩小游戏 ----
   await page.evaluate(() => { WorldHub.player.x = 470; WorldHub.player.y = 545; WorldHub.tap = null; });
   await page.waitForTimeout(140);
-  assert(await page.evaluate(() => WorldHub.near && WorldHub.near.id === 'krusty' && $('worldHint').textContent.includes('装修中')), '走近蟹堡王时提示装修中');
+  assert(await page.evaluate(() => WorldHub.near && WorldHub.near.id === 'krusty' && $('worldHint').textContent.includes('做蟹黄包')), '走近蟹堡王时提示做蟹黄包');
   await page.keyboard.press('e');
-  await page.waitForTimeout(90);
-  assert(await page.evaluate(() => !$('worldToast').hidden && $('worldToast').textContent.includes('装修中')), '在蟹堡王按 E 给出装修中台词');
+  await page.waitForTimeout(140);
+  assert(await page.evaluate(() =>
+    game.state === 'krusty' && !$('krusty').hidden && KrustyGame.active && KrustyGame.orders.length > 0
+  ), '在蟹堡王按 E 进入午市，顾客已经开始排队');
+  await page.evaluate(() => { quitKrusty(); gotoWorld(); });
+  await page.waitForTimeout(120);
 
   await page.evaluate(() => { WorldHub.player.x = 500; WorldHub.player.y = 1105; WorldHub.tap = null; });
   await page.waitForTimeout(140);
-  assert(await page.evaluate(() => WorldHub.near && WorldHub.near.id === 'karate'), '走近空手道棚会被识别为当前地点');
+  assert(await page.evaluate(() => WorldHub.near && WorldHub.near.id === 'karate' && $('worldHint').textContent.includes('空手道切磋')), '走近空手道棚会被识别为当前地点');
   await page.keyboard.press('e');
-  await page.waitForTimeout(90);
-  assert(await page.evaluate(() => $('worldToast').textContent.includes('装修中')), '空手道棚也还是装修中');
+  await page.waitForTimeout(140);
+  assert(await page.evaluate(() =>
+    game.state === 'dojo' && !$('dojo').hidden && DojoGame.active && DojoGame.belt().name === '白带'
+  ), '在空手道棚按 E 进入切磋，白带开局');
+  await page.evaluate(() => quitDojo());
+  await page.waitForTimeout(120);
+  assert(await page.evaluate(() => game.state === 'world' && $('worldHud').hidden === false), '退出道场回到小世界');
 
   // ---- 走进浅水：不点按钮、不切场景，直接开抓 ----
   await page.evaluate(() => { WorldHub.player.x = 1020; WorldHub.player.y = 660; WorldHub.tap = null; });

@@ -9,7 +9,7 @@
  *
  * 发版时把 VERSION 加一即可让旧缓存整体失效。
  */
-const VERSION = 'v5';
+const VERSION = 'v6';
 const CACHE = `bikini-bay-run-${VERSION}`;
 const SHELL = [
   './',
@@ -18,6 +18,8 @@ const SHELL = [
   './assets/ui.css',
   './assets/chars/characters.js',
   './assets/world/world.js',
+  './assets/world/krusty.js',
+  './assets/world/dojo.js',
   './assets/chars/spongebob.webp',
   './assets/chars/patrick.webp',
   './assets/chars/squidward.webp',

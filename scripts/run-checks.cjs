@@ -16,7 +16,7 @@ const PORT = Number(process.env.PORT || 4173);
 const BASE = `http://127.0.0.1:${PORT}`;
 const files = process.argv.slice(2).length
   ? process.argv.slice(2)
-  : ['scripts/check-game.cjs', 'scripts/check-economy.cjs', 'scripts/check-progress.cjs', 'scripts/check-versus.cjs', 'scripts/check-world.cjs', 'scripts/check-deepsea.cjs', 'scripts/check-pwa.cjs'];
+  : ['scripts/check-game.cjs', 'scripts/check-economy.cjs', 'scripts/check-progress.cjs', 'scripts/check-versus.cjs', 'scripts/check-world.cjs', 'scripts/check-krusty.cjs', 'scripts/check-dojo.cjs', 'scripts/check-deepsea.cjs', 'scripts/check-pwa.cjs'];
 
 function startServer() {
   const child = spawn(process.execPath, [path.join(root, 'scripts', 'serve.cjs'), String(PORT)], {

@@ -1,7 +1,7 @@
 /* ================= 小世界 · 可走动的比奇堡海湾 =================
  *
  * 这里不是「点卡片」的地图，而是一张能走的海湾：俯视视角、镜头跟着跑者，
- * 沙滩上站着蟹堡王和空手道棚（装修中），东边一片浅水就是水母田。
+ * 沙滩上站着蟹堡王和空手道棚（都能进门玩小游戏），东边一片浅水就是水母田。
  *
  * 玩法闭环：
  *   - 沙滩上走动（WASD / 方向键；触屏拖动或点地走路）；
@@ -70,7 +70,13 @@ const JELLY_KIND_ORDER = ['pink', 'blue', 'zap', 'gold'];
 
 /* 存档里 world 字段的默认形状；readEconomy 会用它兜底老存档。 */
 function emptyWorldSave() {
-  return { jelly: 0, jellyRuns: 0, jellyCaught: 0, jellyBest: 0, jellyGold: 0 };
+  return {
+    jelly: 0, jellyRuns: 0, jellyCaught: 0, jellyBest: 0, jellyGold: 0,
+    // 蟹堡王 · 午市
+    krustyRuns: 0, krustyServed: 0, krustyBest: 0, krustyPerfect: 0, krustyCoins: 0,
+    // 空手道棚 · 切磋
+    dojoWins: 0, dojoBelt: 0, dojoBestPerfect: 0, dojoMatches: 0,
+  };
 }
 
 /* ---------------- 海湾里的三个地点 ---------------- */
@@ -82,12 +88,12 @@ const HUB_SPOTS = [
   },
   {
     id: 'krusty', no: '02', name: '蟹堡王', en: 'KRUSTY KRAB', tag: '做蟹黄包',
-    desc: '秘方还在装修', accent: '#e8a020', open: false,
+    desc: '午市开张，接单煎肉饼', accent: '#e8a020', open: true,
     x: 470, y: 430, doorX: 470, doorY: 500, r: 130,
   },
   {
     id: 'karate', no: '03', name: '空手道棚', en: 'KARATE SHACK', tag: '空手道切磋',
-    desc: '道场还在装修', accent: '#4a7fd6', open: false,
+    desc: '和对手过三招，赢段位', accent: '#4a7fd6', open: true,
     x: 500, y: 990, doorX: 500, doorY: 1060, r: 120,
   },
 ];
@@ -254,10 +260,10 @@ const WorldHub = {
     if (game.state === 'jelly') return '';
     if (this.near) {
       if (this.near.id === 'jelly') return `${this.near.name} · 走进浅水（或按 E）开始抓水母`;
-      return `${this.near.name} · 装修中 —— 先去水母田抓两网？`;
+      return `${this.near.name} · ${this.near.tag}（按 E / 点门进入）`;
     }
     if (this.inLagoon(this.player.x, this.player.y, 1.35)) return '水母田 · 再往水里走一点就开始抓水母';
-    return 'WASD / 拖动 走动 · 走进东边的浅水抓水母 · C 换人';
+    return 'WASD / 拖动 走动 · 水母田抓水母 · 蟹堡王做蟹黄包 · 空手道棚切磋';
   },
   toast(text) {
     const el = $('worldToast');
@@ -312,9 +318,11 @@ const WorldHub = {
   talk(s) {
     this.near = s;
     this.setHint(this.hintFor());
+    AudioSys.resume();
     if (s.id === 'jelly') { startJellyGame(); return; }
-    this.toast(`${s.name} 还在装修中，先去水母田抓两网？`);
-    AudioSys.resume(); AudioSys.tone(220, 0.1, 'triangle', 0.1);
+    if (s.id === 'krusty') { if (typeof openKrusty === 'function') openKrusty(); return; }
+    if (s.id === 'karate') { if (typeof openDojo === 'function') openDojo(); return; }
+    AudioSys.tone(220, 0.1, 'triangle', 0.1);
   },
   interact() {
     if (game.state !== 'world' || this.picking) return null;
@@ -655,7 +663,18 @@ const WorldHub = {
     cx.fillStyle = '#f0b45f'; cx.beginPath(); cx.ellipse(x + 50, y - bh - 40, 13, 6, 0, Math.PI, TAU); cx.fill();
     cx.fillStyle = '#8a5a2b'; cx.fillRect(x + 38, y - bh - 39, 24, 4);
     cx.fillStyle = '#7ec850'; cx.fillRect(x + 37, y - bh - 35, 26, 3);
-    if (!sp.open) this.drawSoon(x, y - 20, t);
+    // 营业中：门口挂一块小绿牌（比「装修中」更醒目，玩家一眼知道能进）
+    this.drawOpenTag(x + 64, y - 26, '营业中', '#2f8f5b');
+    // 屋顶冒热气，午市开张的暗示
+    for (let i = 0; i < 3; i++) {
+      const k = (t * 0.35 + i / 3) % 1;
+      cx.globalAlpha = 0.22 * (1 - k);
+      cx.fillStyle = '#fff';
+      cx.beginPath();
+      cx.arc(x - 46 + Math.sin(t * 1.2 + i) * 6, y - bh - 6 - k * 34, 7 + k * 9, 0, TAU);
+      cx.fill();
+    }
+    cx.globalAlpha = 1;
     cx.restore();
   },
   drawKarate(sp, t) {
@@ -698,20 +717,19 @@ const WorldHub = {
     cx.textAlign = 'center'; cx.textBaseline = 'middle';
     cx.fillText('空手道', 0, 4);
     cx.restore();
-    if (!sp.open) this.drawSoon(x, y - 18, t);
+    this.drawOpenTag(x + 46, y - 22, '切磋中', '#2f8f5b');
     cx.restore();
   },
-  drawSoon(x, y, t) {
+  drawOpenTag(x, y, text, bg) {
     cx.save();
-    cx.translate(x, y);
-    const tw = 120, th = 22;
-    cx.rotate(-0.05);
-    cx.fillStyle = '#ffe059'; cx.fillRect(-tw / 2, -th / 2, tw, th);
-    cx.strokeStyle = '#243b5e'; cx.lineWidth = 2; cx.strokeRect(-tw / 2, -th / 2, tw, th);
-    cx.fillStyle = '#243b5e';
-    cx.font = '900 13px system-ui, "Microsoft YaHei", sans-serif';
+    cx.font = '900 12px system-ui, "Microsoft YaHei", sans-serif';
     cx.textAlign = 'center'; cx.textBaseline = 'middle';
-    cx.fillText('装修中 · 敬请期待', 0, 1);
+    const w = cx.measureText(text).width + 16;
+    cx.fillStyle = bg;
+    worldRoundRect(x - w / 2, y - 11, w, 22, 11); cx.fill();
+    cx.strokeStyle = 'rgba(36,59,94,0.55)'; cx.lineWidth = 1.5; cx.stroke();
+    cx.fillStyle = '#fff';
+    cx.fillText(text, x, y + 1);
     cx.restore();
   },
   drawSign(t) {
@@ -749,7 +767,9 @@ const WorldHub = {
     const s = this.near;
     const y = s.id === 'krusty' ? s.y - 200 : s.id === 'karate' ? s.y - 190 : s.y - 118;
     const bob = Math.sin(t * 3) * 3;
-    const label = s.id === 'jelly' ? '水母田 · 下水' : `${s.name} · 装修中`;
+    const label = s.id === 'jelly' ? '水母田 · 下水'
+      : s.id === 'krusty' ? '蟹堡王 · 做蟹黄包'
+      : '空手道棚 · 切磋';
     cx.save();
     cx.font = '900 16px system-ui, "Microsoft YaHei", sans-serif';
     cx.textAlign = 'center'; cx.textBaseline = 'middle';

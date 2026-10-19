@@ -692,3 +692,153 @@ kbd { display: inline-block; min-width: 20px; padding: 1px 6px; border: 1px soli
   .jelly-buttons { justify-content: flex-end; }
   .jelly-hint { text-align: center; }
 }
+
+/* ========== 蟹堡王 · 午市做蟹黄包 ========== */
+#krusty {
+  background:
+    radial-gradient(circle at 50% 0%, #ffedbb 0%, transparent 58%),
+    repeating-linear-gradient(90deg, #d79a56 0 46px, #cf8f4c 46px 48px),
+    #d79a56;
+  color: #243b5e;
+}
+.kr-wrap {
+  position: relative;
+  width: min(980px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(7px, 1.4vh, 14px);
+  padding: clamp(10px, 2.2vw, 22px);
+  background: #fdf3dcf5;
+  border: 4px solid #6b3a1e;
+  border-radius: 18px;
+  box-shadow: 0 8px 0 #6b3a1e, 0 20px 40px #3a1e0b55;
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+.kr-top { display: flex; align-items: center; gap: 10px; }
+.kr-title { font-size: clamp(17px, 2.4vw, 26px); font-weight: 900; letter-spacing: 2px; color: #a53428; white-space: nowrap; }
+.kr-title small { font-size: 11px; color: #6b3a1e; letter-spacing: 1px; }
+.kr-pills { margin-left: auto; display: flex; gap: 6px; }
+.kr-pills .pill { min-width: 54px; padding: 4px 9px; font-size: 16px; background: #fff8e6; box-shadow: none; border: 2px solid #e0c9a3; }
+.kr-pills .pill small { font-size: 9px; margin-bottom: 0; }
+.kr-top .icon-btn { position: static; flex: 0 0 38px; width: 38px; height: 38px; }
+.kr-orders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; min-height: 84px; }
+.kr-order { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 7px 9px; border: 3px solid #d8b98f; border-radius: 12px; background: #fffaf0; box-shadow: 0 3px #e0c9a3; }
+.kr-order .kr-who { font-size: 23px; line-height: 1; }
+.kr-order .kr-recipe { display: flex; gap: 2px; font-size: 18px; line-height: 1.1; }
+.kr-order .kr-recipe span { filter: drop-shadow(0 1px 0 #0002); }
+.kr-pat { width: 100%; height: 7px; border-radius: 99px; background: #eadcc5; overflow: hidden; }
+.kr-pat i { display: block; height: 100%; background: #54b06b; transition: width .12s linear; }
+.kr-pat i.low { background: #e35d4a; }
+.kr-empty-order { grid-column: 1 / -1; display: grid; place-items: center; color: #9a7b57; font-size: 13px; border: 2px dashed #d8b98f; border-radius: 12px; }
+.kr-mid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 9px; }
+.kr-grill { padding: 10px 12px; border: 3px solid #8a5a2b; border-radius: 12px; background: #5b3520; display: flex; flex-direction: column; gap: 9px; }
+.kr-grill-bar { position: relative; height: 28px; border-radius: 99px; background: #3a2113; overflow: hidden; box-shadow: inset 0 2px 6px #0007; }
+.kr-zone { position: absolute; top: 0; bottom: 0; }
+.kr-zone.good { left: 22%; right: 22%; background: #ffd23e33; border-left: 2px dashed #ffd23e88; border-right: 2px dashed #ffd23e88; }
+.kr-zone.perfect { left: 39%; right: 39%; background: #7ee06666; }
+.kr-marker { position: absolute; top: -3px; bottom: -3px; width: 8px; margin-left: -4px; border-radius: 99px; background: #fffdf5; box-shadow: 0 0 0 2px #243b5e, 0 0 12px #ffd23e; }
+.kr-grill-row { display: flex; align-items: center; gap: 9px; }
+.kr-grill-row .board-button { flex: 0 0 auto; background: #ffd23e; }
+.kr-grill-row .board-button.on { background: #7ee066; }
+.kr-tray { flex: 1; min-height: 44px; display: flex; align-items: center; gap: 6px; padding: 5px 10px; background: #3a2113; border-radius: 8px; color: #f7e6c8; font-size: 11px; }
+.kr-patty { font-size: 25px; line-height: 1; filter: drop-shadow(0 2px 0 #0004); }
+.kr-patty.gold { filter: drop-shadow(0 0 7px #ffd23e) drop-shadow(0 2px 0 #0004); }
+.kr-empty { color: #a98d6e; font-size: 11px; }
+.kr-build { padding: 9px 11px; border: 3px dashed #c9a878; border-radius: 12px; background: #fff8e6; display: flex; flex-direction: column; gap: 5px; }
+.kr-build > small { color: #8a5a2b; font-weight: 900; font-size: 10px; letter-spacing: 1px; }
+.kr-stack { display: flex; gap: 3px; align-items: center; min-height: 32px; font-size: 23px; }
+.kr-build-btns { display: flex; gap: 6px; margin-top: auto; }
+.kr-build-btns .btn { padding: 4px 10px; font-size: 11px; border-width: 2px; box-shadow: 0 2px #243b5e; }
+.kr-build-btns .btn:disabled { opacity: .45; cursor: default; }
+.kr-build-btns .btn:disabled:hover { transform: none; box-shadow: 0 2px #243b5e; }
+.kr-ing { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.kr-ing button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 56px; border: 3px solid #6b3a1e; border-radius: 12px; background: #fffaf0; box-shadow: 0 4px #b98a5a; font-size: 23px; cursor: pointer; transition: transform .08s, background .15s; }
+.kr-ing button small { font-size: 10px; font-weight: 900; color: #6b3a1e; }
+.kr-ing button:active { transform: translateY(3px); box-shadow: 0 1px #b98a5a; }
+.kr-ing button.need { background: #e9ffd9; outline: 3px solid #7ee066; outline-offset: 2px; animation: needPulse .9s infinite alternate; }
+@keyframes needPulse { to { background: #fff3b8; } }
+.kr-tip { min-height: 17px; text-align: center; font-size: 12px; font-weight: 900; color: #8a5a2b; }
+.kr-tip.go { animation: tipIn .3s ease; }
+@keyframes tipIn { from { transform: scale(.94); opacity: .4; } }
+.kr-pop { position: absolute; left: 50%; top: 36%; transform: translateX(-50%); font-size: 30px; font-weight: 900; color: #2f8f5b; text-shadow: 0 2px 0 #fff; opacity: 0; pointer-events: none; }
+.kr-pop.go { animation: comboUp .9s ease forwards; }
+
+/* ========== 空手道棚 · 切磋 ========== */
+#dojo {
+  background:
+    radial-gradient(circle at 50% 36%, #e35d4a2e 0 17%, transparent 17.3%),
+    repeating-linear-gradient(0deg, transparent 0 42px, #00000009 42px 44px),
+    repeating-linear-gradient(90deg, transparent 0 42px, #00000009 42px 44px),
+    #efe2c6;
+  color: #243b5e;
+}
+.dj-wrap { position: relative; width: min(900px, 100%); display: flex; flex-direction: column; gap: 11px; padding: 15px clamp(13px, 3vw, 26px) 18px; border: 4px solid #243b5e; border-radius: 16px; background: #fffdf5ee; box-shadow: 0 8px 0 #243b5e80, 0 22px 44px #0002; }
+.dj-top { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.dj-title { font-weight: 900; font-size: clamp(16px, 2.2vw, 23px); letter-spacing: 2px; color: #a53428; white-space: nowrap; }
+.dj-title small { font-size: 10px; color: #6b4423; letter-spacing: 1px; }
+.dj-belt { margin-left: auto; padding: 3px 11px; border-radius: 99px; border: 2px solid #243b5e; font-size: 11px; font-weight: 900; white-space: nowrap; }
+.dj-sets, .dj-round { font-size: 11px; font-weight: 900; color: #537073; white-space: nowrap; }
+.dj-top .icon-btn { position: static; margin-left: 4px; width: 34px; height: 34px; flex: 0 0 34px; }
+.dj-scoreboard { display: flex; align-items: center; justify-content: center; gap: clamp(18px, 6vw, 60px); }
+.dj-side { display: flex; align-items: baseline; gap: 7px; }
+.dj-side small { font-size: 10px; font-weight: 900; color: #7a8f8b; }
+.dj-side b { font-size: clamp(30px, 6vw, 44px); line-height: 1; color: #2f8f5b; font-variant-numeric: tabular-nums; }
+.dj-side.foe b { color: #e35d4a; }
+.dj-vs { font-size: 12px; font-weight: 900; color: #9fb3ae; }
+.dj-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 12px 16px 16px; border: 3px solid #243b5e; border-radius: 14px; background: linear-gradient(#e8f4ef, #d8ece4); overflow: hidden; }
+.dj-foe { font-size: clamp(44px, 9vw, 72px); line-height: 1; filter: drop-shadow(0 4px 0 #243b5e33); transition: transform .06s; }
+.dj-foe.strike { animation: foeStrike .18s infinite alternate; }
+@keyframes foeStrike { to { transform: translateY(-4px) scale(1.08); } }
+.dj-foe.hit { animation: foeHit .3s; }
+@keyframes foeHit { 30% { transform: translateX(-8px) rotate(-8deg); } 60% { transform: translateX(8px) rotate(8deg); } }
+.dj-readout { display: flex; align-items: center; gap: 11px; flex-wrap: wrap; justify-content: center; }
+.dj-move { padding: 3px 13px; border-radius: 8px; color: #fff; background: #9fb3ae; font-weight: 900; font-size: clamp(14px, 2.6vw, 19px); letter-spacing: 2px; }
+.dj-call { font-size: 12px; font-weight: 900; color: #537073; min-width: 130px; }
+.dj-bar { width: 100%; height: 11px; border-radius: 99px; background: #c9ded6; overflow: hidden; }
+.dj-bar i { display: block; height: 100%; width: 0; background: #5b8fd6; transition: width .05s linear; }
+.dj-bar i.hot { background: #e35d4a; box-shadow: 0 0 10px #e35d4a; }
+.dj-blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.dj-blocks button { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 11px 6px; border: 3px solid #243b5e; border-radius: 12px; background: #fff; box-shadow: 0 4px #243b5e; font-size: clamp(13px, 2.2vw, 17px); font-weight: 900; color: #243b5e; cursor: pointer; transition: transform .08s, background .15s; }
+.dj-blocks button small { font-size: 9px; color: #6b7f7b; font-weight: 700; }
+.dj-blocks button:active { transform: translateY(3px); box-shadow: 0 1px #243b5e; }
+.dj-blocks button.need { background: #fff1bd; box-shadow: 0 0 0 3px #ffd23e, 0 4px #243b5e; }
+.dj-tip { text-align: center; font-size: 11px; font-weight: 900; color: #6b7f7b; }
+
+@media (max-width: 700px) {
+  .kr-orders { gap: 6px; }
+  .kr-order { padding: 5px 6px; }
+  .kr-order .kr-recipe { font-size: 14px; }
+  .kr-mid { grid-template-columns: 1fr; }
+  .kr-ing { gap: 5px; }
+  .kr-ing button { min-height: 50px; font-size: 20px; }
+  .kr-ing button small { font-size: 9px; }
+  .kr-pills .pill { min-width: 46px; padding: 3px 6px; font-size: 13px; }
+  .kr-title { font-size: 16px; }
+  .kr-wrap { gap: 7px; padding: 9px; }
+  .dj-wrap { gap: 8px; padding: 11px 10px 14px; }
+  .dj-round { display: none; }
+  .dj-call { min-width: 0; }
+}
+@media (max-height: 560px) {
+  .kr-wrap { padding: 8px 12px; gap: 6px; }
+  .kr-orders { min-height: 60px; }
+  .kr-order { flex-direction: row; justify-content: center; gap: 8px; padding: 4px 6px; }
+  .kr-order .kr-who { font-size: 17px; }
+  .kr-order .kr-pat { width: 46px; }
+  .kr-grill { padding: 6px 10px; gap: 6px; }
+  .kr-grill-bar { height: 20px; }
+  .kr-tray { min-height: 34px; }
+  .kr-ing button { min-height: 42px; font-size: 18px; }
+  .kr-tip { display: none; }
+  .kr-build { padding: 6px 9px; }
+  .kr-stack { min-height: 24px; font-size: 19px; }
+  .dj-wrap { padding: 8px 14px 11px; gap: 7px; }
+  .dj-foe { font-size: 38px; }
+  .dj-stage { padding: 7px 14px 9px; gap: 6px; }
+  .dj-side b { font-size: 28px; }
+  .dj-blocks button { padding: 7px 5px; }
+  .dj-tip { display: none; }
+  .dj-wrap { overflow-y: auto; touch-action: pan-y; }
+}

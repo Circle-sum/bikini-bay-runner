@@ -15,6 +15,8 @@ const FILES = [
   'assets/ui.css',
   'assets/chars/characters.js',
   'assets/world/world.js',
+  'assets/world/krusty.js',
+  'assets/world/dojo.js',
   'assets/chars/spongebob.webp',
   'assets/chars/patrick.webp',
   'assets/chars/squidward.webp',

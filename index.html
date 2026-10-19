@@ -342,8 +342,126 @@
   </div>
 </div>
 
+<!-- 蟹堡王 · 午市做蟹黄包 -->
+<div class="screen kr-screen" id="krusty" hidden>
+  <div class="kr-wrap">
+    <div class="kr-top">
+      <span class="kr-title">蟹堡王 <small>午市</small></span>
+      <div class="kr-pills">
+        <span class="pill"><small>剩余</small><span id="krTime">75.0</span></span>
+        <span class="pill coin"><small>收入</small><span id="krCoins">0</span></span>
+        <span class="pill"><small>连单</small><span id="krCombo">0</span></span>
+      </div>
+      <button class="icon-btn" id="krQuit" title="收摊结算" aria-label="收摊结算">✕</button>
+    </div>
+    <div class="kr-orders" id="krOrders"></div>
+    <div class="kr-mid">
+      <div class="kr-grill">
+        <div class="kr-grill-bar">
+          <span class="kr-zone good" id="krZoneGood"></span>
+          <span class="kr-zone perfect" id="krZonePerfect"></span>
+          <i class="kr-marker" id="krMarker"></i>
+        </div>
+        <div class="kr-grill-row">
+          <button class="board-button" id="krGrillBtn">煎肉饼 <small>空格</small></button>
+          <div class="kr-tray" id="krTray"><span class="kr-empty">备餐台空着</span></div>
+        </div>
+      </div>
+      <div class="kr-build">
+        <small>盘子里</small>
+        <div class="kr-stack" id="krBuild"><span class="kr-empty">空盘子</span></div>
+        <div class="kr-build-btns">
+          <button class="btn small ghost" id="krUndo" hidden>撤回</button>
+          <button class="btn small ghost" id="krClear">倒掉</button>
+        </div>
+      </div>
+    </div>
+    <div class="kr-ing" id="krIng">
+      <button data-ing="bun">🍞<small>面包</small></button>
+      <button data-ing="patty">🥩<small>肉饼</small></button>
+      <button data-ing="lettuce">🥬<small>生菜</small></button>
+      <button data-ing="tomato">🍅<small>番茄</small></button>
+      <button data-ing="cheese">🧀<small>芝士</small></button>
+    </div>
+    <div class="kr-tip" id="krTip">点「煎肉饼」开始，指针停在中间就是金黄</div>
+    <div class="kr-pop" id="krPop"></div>
+  </div>
+</div>
+
+<!-- 蟹堡王 · 结算 -->
+<div class="screen dim" id="krustyOver" hidden>
+  <div class="panel">
+    <h2 id="koTitle">收摊啦！</h2>
+    <div class="stats">
+      <div class="stat"><b id="koCoins">0</b><span>收入</span></div>
+      <div class="stat"><b id="koServed">0</b><span>卖出</span></div>
+      <div class="stat"><b id="koPerfect">0</b><span>金黄肉饼</span></div>
+      <div class="stat"><b id="koCombo">0</b><span>最高连单</span></div>
+    </div>
+    <div class="wallet-reward" id="koReward">本局收入 0 贝壳币</div>
+    <div class="run-recap" id="koTotal"></div>
+    <div class="row">
+      <button class="btn green" id="btnKrustyAgain">再开一市</button>
+      <button class="btn ghost" id="btnKrustyBack">回小世界</button>
+    </div>
+  </div>
+</div>
+
+<!-- 空手道棚 · 切磋 -->
+<div class="screen dj-screen" id="dojo" hidden>
+  <div class="dj-wrap">
+    <div class="dj-top">
+      <span class="dj-title">空手道棚 <small>切磋</small></span>
+      <span class="dj-belt" id="djBelt">白带</span>
+      <span class="dj-sets" id="djSets">局 0 : 0</span>
+      <span class="dj-round" id="djRound">第 1 回合</span>
+      <button class="icon-btn" id="djQuit" title="退出道场" aria-label="退出道场">✕</button>
+    </div>
+    <div class="dj-scoreboard">
+      <div class="dj-side"><small>你</small><b id="djYou">0</b></div>
+      <div class="dj-vs">VS</div>
+      <div class="dj-side foe"><small>对手</small><b id="djFoe">0</b></div>
+    </div>
+    <div class="dj-stage">
+      <div class="dj-foe" id="djFoeFace">🥋</div>
+      <div class="dj-readout">
+        <div class="dj-move" id="djMove">…</div>
+        <div class="dj-call" id="djCall">对手起手…</div>
+      </div>
+      <div class="dj-bar"><i id="djBar"></i></div>
+    </div>
+    <div class="dj-blocks" id="djBlocks">
+      <button data-block="high">上段格挡<small>1 · 高踢</small></button>
+      <button data-block="mid">中段格挡<small>2 · 中拳</small></button>
+      <button data-block="low">下段格挡<small>3 · 扫腿</small></button>
+    </div>
+    <div class="dj-tip" id="djTip">看准红区，按下对应格挡 = 看破（1 分）；三局两胜</div>
+  </div>
+</div>
+
+<!-- 空手道棚 · 结算 -->
+<div class="screen dim" id="dojoOver" hidden>
+  <div class="panel">
+    <h2 id="doTitle">切磋结束</h2>
+    <div class="stats">
+      <div class="stat"><b id="doPerfect">0</b><span>看破</span></div>
+      <div class="stat"><b id="doScore">0 : 0</b><span>回合</span></div>
+      <div class="stat"><b id="doBelt">白带</b><span>段位</span></div>
+      <div class="stat"><b id="doRewardCoins">0</b><span>贝壳币</span></div>
+    </div>
+    <div class="wallet-reward" id="doReward"></div>
+    <div class="run-recap" id="doTotal"></div>
+    <div class="row">
+      <button class="btn green" id="btnDojoAgain">再战一场</button>
+      <button class="btn ghost" id="btnDojoBack">回小世界</button>
+    </div>
+  </div>
+</div>
+
 <script src="assets/chars/characters.js"></script>
 <script src="assets/world/world.js"></script>
+<script src="assets/world/krusty.js"></script>
+<script src="assets/world/dojo.js"></script>
 <script>
 'use strict';
 /* ================= 基础工具 ================= */
@@ -481,6 +599,12 @@ const ACHIEVEMENTS = [
   { id: 'jelly-run-18', icon: '🧺', name: '一网打尽', desc: '单局抓水母收获 18 个果冻', reward: 80, check: () => SAVE.world.jellyBest >= 18 },
   { id: 'jelly-gold-3', icon: '✨', name: '黄金猎手', desc: '累计抓到 3 只黄金水母', reward: 100, check: () => SAVE.world.jellyGold >= 3 },
   { id: 'jelly-total-100', icon: '🏵️', name: '水母田常客', desc: '累计抓到 100 只水母', reward: 120, check: () => SAVE.world.jellyCaught >= 100 },
+  { id: 'krusty-first', icon: '🍔', name: '第一份订单', desc: '在蟹堡王卖出第一份蟹黄包', reward: 30, check: () => SAVE.world.krustyServed >= 1 },
+  { id: 'krusty-run-10', icon: '🧑‍🍳', name: '午市红人', desc: '单局卖出 10 份蟹黄包', reward: 80, check: () => SAVE.world.krustyBest >= 10 },
+  { id: 'krusty-total-50', icon: '🍟', name: '蟹堡王台柱', desc: '累计卖出 50 份蟹黄包', reward: 120, check: () => SAVE.world.krustyServed >= 50 },
+  { id: 'dojo-first', icon: '🥋', name: '第一次过招', desc: '在空手道棚赢下一场切磋', reward: 40, check: () => SAVE.world.dojoWins >= 1 },
+  { id: 'dojo-black', icon: '⚫', name: '黑带跑者', desc: '拿到空手道黑带', reward: 200, check: () => SAVE.world.dojoBelt >= 4 },
+  { id: 'dojo-perfect-3', icon: '👁️', name: '看破三连', desc: '单场看破 3 次', reward: 60, check: () => SAVE.world.dojoBestPerfect >= 3 },
 ];
 const ACHIEVEMENT_IDS = new Set(ACHIEVEMENTS.map(a => a.id));
 
@@ -504,6 +628,11 @@ function readEconomy() {
     jelly: count(rawWorld.jelly), jellyRuns: count(rawWorld.jellyRuns),
     jellyCaught: count(rawWorld.jellyCaught), jellyBest: count(rawWorld.jellyBest),
     jellyGold: count(rawWorld.jellyGold),
+    krustyRuns: count(rawWorld.krustyRuns), krustyServed: count(rawWorld.krustyServed),
+    krustyBest: count(rawWorld.krustyBest), krustyPerfect: count(rawWorld.krustyPerfect),
+    krustyCoins: count(rawWorld.krustyCoins),
+    dojoWins: count(rawWorld.dojoWins), dojoMatches: count(rawWorld.dojoMatches),
+    dojoBelt: Math.min(4, count(rawWorld.dojoBelt)), dojoBestPerfect: count(rawWorld.dojoBestPerfect),
   };
   return {
     wallet: count(raw.wallet), revive: count(raw.revive), boards,
@@ -3084,6 +3213,7 @@ const screens = {
   achievements: $('achievements'), stats: $('stats'), settings: $('settings'),
   vsIntro: $('vsIntro'), vsPause: $('vsPause'), vsOver: $('vsOver'),
   worldPick: $('worldPick'), jellyPause: $('jellyPause'), jellyOver: $('jellyOver'),
+  krusty: $('krusty'), krustyOver: $('krustyOver'), dojo: $('dojo'), dojoOver: $('dojoOver'),
 };
 let shopReturn = 'title';
 function updateWalletBadges() {
@@ -3236,6 +3366,111 @@ function quitJellyGame() {
   if (game.state === 'jellyPause') game.state = 'jelly';
   if (game.state !== 'jelly') return;
   endJellyGame();
+}
+
+/* ================= 蟹堡王 · 午市 ================= */
+function openKrusty() {
+  if (game.state !== 'world') return;
+  AudioSys.resume();
+  AudioSys.bgmStop();
+  WorldHub.clearKeys();
+  KrustyGame.start();
+  show('krusty');
+}
+/* 收摊结算：把本局收入、卖出的单数和完美肉饼并进 world 存档。
+   persistEconomy 失败时会整体回滚，所以「未入账」的提示和内存状态一致。 */
+function endKrustyShift() {
+  if (game.state !== 'krusty') return;
+  const st = KrustyGame.stats();
+  game.state = 'krustyOver';
+  const w = SAVE.world;
+  w.krustyRuns += 1;
+  w.krustyServed += st.served;
+  w.krustyBest = Math.max(w.krustyBest, st.served);
+  w.krustyPerfect += st.perfect;
+  w.krustyCoins += st.earned;
+  SAVE.wallet += st.earned;
+  const ok = persistEconomy();
+  if (ok) evaluateAchievements();
+  $('koTitle').textContent = st.served >= 10 ? '午市大卖！' : st.served > 0 ? '收摊啦！' : '一份也没卖出去…';
+  $('koCoins').textContent = st.earned;
+  $('koServed').textContent = st.served;
+  $('koPerfect').textContent = st.perfect;
+  $('koCombo').textContent = st.bestCombo;
+  $('koReward').textContent = ok
+    ? `本局收入 ${st.earned} 贝壳币 · 余额 ${SAVE.wallet}`
+    : `存档写入失败，本局收入没有入账（${st.earned} 贝壳币）。请检查浏览器存储。`;
+  $('koTotal').textContent = `累计卖出 ${SAVE.world.krustyServed} 份 · 单局最佳 ${SAVE.world.krustyBest} 份 · 金黄肉饼 ${SAVE.world.krustyPerfect} 个`;
+  show('krustyOver');
+  AudioSys.bgmStop();
+  if (st.earned > 0) AudioSys.coin();
+}
+function quitKrusty() {
+  if (game.state !== 'krusty') return;
+  KrustyGame.finish();
+}
+function restartKrusty() {
+  AudioSys.resume();
+  KrustyGame.start();
+  show('krusty');
+}
+
+/* ================= 空手道棚 · 切磋 ================= */
+function openDojo() {
+  if (game.state !== 'world') return;
+  AudioSys.resume();
+  AudioSys.bgmStop();
+  WorldHub.clearKeys();
+  DojoGame.start();
+  show('dojo');
+}
+/* 切磋结算：赢了才给奖金，首次升带额外 +60；输了保留段位。 */
+function endDojoMatch(win) {
+  if (game.state !== 'dojo') return;
+  const st = DojoGame.stats();
+  game.state = 'dojoOver';
+  const belt = DOJO_BELTS[st.beltIdx] || DOJO_BELTS[0];
+  const w = SAVE.world;
+  let reward = 0;
+  let promoted = false;
+  w.dojoMatches += 1;
+  w.dojoBestPerfect = Math.max(w.dojoBestPerfect, st.perfect);
+  if (win) {
+    w.dojoWins += 1;
+    reward = belt.reward + st.perfect * 3;
+    if (w.dojoBelt === st.beltIdx && w.dojoBelt < DOJO_BELTS.length - 1) {
+      w.dojoBelt += 1;
+      reward += DOJO_BELT_STEP;
+      promoted = true;
+    }
+    SAVE.wallet += reward;
+  }
+  const ok = persistEconomy();
+  if (ok) evaluateAchievements();
+  const beltNow = DOJO_BELTS[SAVE.world.dojoBelt] || DOJO_BELTS[0];
+  $('doTitle').textContent = win ? (promoted ? '升带成功！' : '切磋获胜！') : '惜败，再来一场';
+  $('doPerfect').textContent = st.perfect;
+  $('doScore').textContent = `${st.roundsYou} : ${st.roundsFoe}`;
+  $('doBelt').textContent = beltNow.name;
+  $('doRewardCoins').textContent = reward;
+  $('doReward').textContent = win
+    ? `奖金 ${reward} 贝壳币${promoted ? `（含升带 +${DOJO_BELT_STEP}）` : ''}${ok ? ` · 余额 ${SAVE.wallet}` : ' · 存档写入失败，未入账'}`
+    : '这场没有奖金，调整节奏再来一次。';
+  $('doTotal').textContent = `当前段位 ${beltNow.name} · 累计胜场 ${SAVE.world.dojoWins} 场 · 单场最多看破 ${SAVE.world.dojoBestPerfect} 次`;
+  show('dojoOver');
+  AudioSys.bgmStop();
+  if (win) AudioSys.power();
+}
+function quitDojo() {
+  if (game.state !== 'dojo') return;
+  DojoGame.cancel();
+  game.state = 'world';
+  gotoWorld();
+}
+function restartDojo() {
+  AudioSys.resume();
+  DojoGame.start();
+  show('dojo');
 }
 function gotoTitle() {
   game.state = 'title';
@@ -3421,6 +3656,11 @@ function renderStats() {
     ['累计捕获水母', `${SAVE.world.jellyCaught} 只`],
     ['单局最多果冻', `${SAVE.world.jellyBest} 个`],
     ['黄金水母', `${SAVE.world.jellyGold} 只`],
+    ['蟹堡王开市', `${SAVE.world.krustyRuns} 局`],
+    ['卖出蟹黄包', `${SAVE.world.krustyServed} 份`],
+    ['单局最多卖出', `${SAVE.world.krustyBest} 份`],
+    ['空手道切磋', `${SAVE.world.dojoMatches} 场 · 胜 ${SAVE.world.dojoWins}`],
+    ['空手段位', `${DOJO_BELTS[SAVE.world.dojoBelt] ? DOJO_BELTS[SAVE.world.dojoBelt].name : '白带'}`],
     ['已解锁跑者', `${SAVE.unlocked.length} / ${CHARS.length}`],
     ['成就进度', `${SAVE.achievements.length} / ${ACHIEVEMENTS.length}`],
   ];
@@ -3858,7 +4098,7 @@ window.addEventListener('keydown', e => {
   const k = e.key;
   // 走动是持续的：按下/松开都记进 WorldHub.keys，主循环里每帧读
   if (game.state === 'world' || game.state === 'jelly') WorldHub.key(k, true);
-  if (e.target.closest('button') && (k === 'Enter' || k === ' ') && game.state !== 'playing' && game.state !== 'jelly') return;
+  if (e.target.closest('button') && (k === 'Enter' || k === ' ') && game.state !== 'playing' && game.state !== 'jelly' && game.state !== 'krusty') return;
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(k)) e.preventDefault();
   if (game.state === 'versus' && k === '/') e.preventDefault(); // 避免 Firefox 的快速查找
   if (game.state === 'playing') {
@@ -3906,6 +4146,23 @@ window.addEventListener('keydown', e => {
     if (k === 'p' || k === 'P' || k === 'Escape' || k === ' ' || k === 'Enter') resumeJellyGame();
   } else if (game.state === 'jellyOver') {
     if (k === 'Enter' || k === ' ') startJellyGame();
+    else if (k === 'Escape') gotoWorld();
+  } else if (game.state === 'krusty') {
+    if (k === ' ' || k === 'Enter' || k === 'e' || k === 'E') KrustyGame.grillAction();
+    else if (k >= '1' && k <= '5') KrustyGame.addIngredient(['bun', 'patty', 'lettuce', 'tomato', 'cheese'][+k - 1]);
+    else if (k === 'z' || k === 'Z') KrustyGame.undo();
+    else if (k === 'x' || k === 'X') KrustyGame.clearStack();
+    else if (k === 'Escape' || k === 'p' || k === 'P') quitKrusty();
+  } else if (game.state === 'krustyOver') {
+    if (k === 'Enter' || k === ' ') restartKrusty();
+    else if (k === 'Escape') gotoWorld();
+  } else if (game.state === 'dojo') {
+    if (k === '1') DojoGame.block('high');
+    else if (k === '2') DojoGame.block('mid');
+    else if (k === '3') DojoGame.block('low');
+    else if (k === 'Escape') quitDojo();
+  } else if (game.state === 'dojoOver') {
+    if (k === 'Enter' || k === ' ') restartDojo();
     else if (k === 'Escape') gotoWorld();
   } else if (game.state === 'paused') {
     if (k === 'p' || k === 'P' || k === 'Escape' || k === ' ') resumeGame();
@@ -4038,6 +4295,27 @@ $('btnJellyRestart').addEventListener('click', startJellyGame);
 $('btnJellyHome').addEventListener('click', quitJellyGame);
 $('btnJellyAgain').addEventListener('click', startJellyGame);
 $('btnJellyBack').addEventListener('click', gotoWorld);
+
+/* ---- 蟹堡王 ---- */
+$('krQuit').addEventListener('click', quitKrusty);
+$('krGrillBtn').addEventListener('click', () => { AudioSys.resume(); KrustyGame.grillAction(); });
+$('krUndo').addEventListener('click', () => KrustyGame.undo());
+$('krClear').addEventListener('click', () => KrustyGame.clearStack());
+$('krIng').addEventListener('click', e => {
+  const b = e.target.closest('button[data-ing]');
+  if (b) { AudioSys.resume(); KrustyGame.addIngredient(b.dataset.ing); }
+});
+$('btnKrustyAgain').addEventListener('click', restartKrusty);
+$('btnKrustyBack').addEventListener('click', gotoWorld);
+
+/* ---- 空手道棚 ---- */
+$('djQuit').addEventListener('click', quitDojo);
+$('djBlocks').addEventListener('click', e => {
+  const b = e.target.closest('button[data-block]');
+  if (b) { AudioSys.resume(); DojoGame.block(b.dataset.block); }
+});
+$('btnDojoAgain').addEventListener('click', restartDojo);
+$('btnDojoBack').addEventListener('click', gotoWorld);
 // 海湾里：点地走路 / 水母田里点哪撒哪；鼠标移动时更新准星
 cv.addEventListener('mousemove', e => {
   if (game.state !== 'jelly') return;
@@ -4143,6 +4421,15 @@ function loop(now) {
     case 'jellyPause':
     case 'jellyOver':
       if (worldDirty) { worldDirty = false; JellyGame.render(0); }
+      break;
+    case 'krusty':
+      KrustyGame.update(dt);
+      break;
+    case 'dojo':
+      DojoGame.update(dt);
+      break;
+    case 'krustyOver':
+    case 'dojoOver':
       break;
   }
 
